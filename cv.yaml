@@ -1,0 +1,81 @@
+meta:
+  name: "Alex Petrov"
+  title: "Senior Software Engineer"
+  email: "alex.petrov@example.com"
+  phone: "+1 (555) 123-4567"
+  location: "San Francisco, CA"
+  website: "https://alexpetrov.dev"
+  linkedin: "https://linkedin.com/in/alexpetrov"
+  github: "https://github.com/alexpetrov"
+  # photo: "assets/photo.jpg"   # optional — any URL or relative path
+
+about: >
+  Pragmatic software engineer with 8+ years building distributed systems
+  at scale. I care about correctness, simplicity, and code that survives
+  contact with reality. Not interested in frameworks for the sake of
+  frameworks — interested in systems that actually work.
+
+sections:
+  - type: experience
+    title: "Experience"
+    items:
+      - company: "Stripe"
+        role: "Senior Software Engineer"
+        period: "2021 — Present"
+        location: "San Francisco, CA"
+        bullets:
+          - "Designed and shipped the payments reconciliation pipeline processing $2B+/day across 40+ currencies"
+          - "Reduced p99 latency of the fraud detection service from 340ms to 28ms by rewriting hot path in Go"
+          - "Led migration of 3 legacy Ruby monolith services to gRPC microservices with zero downtime"
+
+      - company: "Cloudflare"
+        role: "Software Engineer"
+        period: "2018 — 2021"
+        location: "San Francisco, CA"
+        bullets:
+          - "Built the core routing logic for Cloudflare Workers — now handling 50M+ requests/day"
+          - "Contributed to the open-source Pingora proxy framework (Rust)"
+          - "Owned the alerting infrastructure for 200+ production services"
+
+      - company: "Yandex"
+        role: "Junior Software Engineer"
+        period: "2016 — 2018"
+        location: "Moscow, Russia"
+        bullets:
+          - "Developed backend services for Yandex.Maps routing API (C++, Python)"
+          - "Improved map tile rendering performance by 35% through spatial indexing optimisation"
+
+  - type: education
+    title: "Education"
+    items:
+      - institution: "Moscow State University"
+        degree: "M.Sc. Computer Science"
+        period: "2014 — 2016"
+        note: "Thesis: Parallel graph algorithms for large-scale geographic data"
+      - institution: "Moscow State University"
+        degree: "B.Sc. Applied Mathematics"
+        period: "2010 — 2014"
+
+  - type: skills
+    title: "Skills"
+    items:
+      - category: "Languages"
+        tags: ["Go", "Rust", "Python", "C++", "TypeScript"]
+      - category: "Infrastructure"
+        tags: ["Kubernetes", "Terraform", "AWS", "GCP", "Kafka", "Linux", "Git", "Docker"]
+      - category: "Databases"
+        tags: ["PostgreSQL", "Redis", "ClickHouse", "CockroachDB"]
+      - category: "Practices"
+        tags: ["Distributed Systems", "gRPC", "Event-Driven", "TDD", "SRE"]
+
+  - type: projects
+    title: "Projects"
+    items:
+      - name: "gofuzz"
+        description: "Coverage-guided fuzzer for Go HTTP handlers. 2.4k stars on GitHub."
+        url: "https://github.com/alexpetrov/gofuzz"
+        tags: ["Go", "Testing", "Open Source"]
+      - name: "kv-bench"
+        description: "Benchmarking suite for distributed key-value stores. Used internally at Stripe."
+        url: "https://github.com/alexpetrov/kv-bench"
+        tags: ["Go", "Benchmarking", "Distributed Systems"]

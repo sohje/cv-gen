@@ -1,0 +1,717 @@
+/* ============================================================
+   CV Generator — style.css
+   Architecture: CSS custom properties for theming,
+   single breakpoint at 768px, print styles baked in.
+   ============================================================ */
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ── Design tokens — light (default / :root) ──────────────── */
+:root,
+html[data-theme="light"] {
+  /* Palette */
+  --c-bg:           #F7F6F2;
+  --c-surface:      #FFFFFF;
+  --c-border:       #E5E4E0;
+  --c-text:         #111110;
+  --c-text-muted:   #6B7280;
+  --c-accent:       #2563EB;
+  --c-accent-hover: #1D4ED8;
+  --c-tag-bg:       #EEF2FF;
+  --c-tag-text:     #3B4FC8;
+
+  /* UI chrome */
+  --c-ui-bg:     #FFFFFF;
+  --c-ui-border: #E5E4E0;
+  --c-ui-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* ── Dark palette ─────────────────────────────────────────── */
+html[data-theme="dark"] {
+  --c-bg:           #0F0F0F;
+  --c-surface:      #1A1A1A;
+  --c-border:       #2A2A2A;
+  --c-text:         #F0EFEB;
+  --c-text-muted:   #8B8B8B;
+  --c-accent:       #4F8EF7;
+  --c-accent-hover: #6BA3FA;
+  --c-tag-bg:       #1E2A3A;
+  --c-tag-text:     #7EB3FF;
+
+  --c-ui-bg:     #1A1A1A;
+  --c-ui-border: #2A2A2A;
+  --c-ui-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ── Warm palette — cream bg, amber accent ────────────────── */
+html[data-theme="warm"] {
+  --c-bg:           #FAF7F0;
+  --c-surface:      #FFFDF8;
+  --c-border:       #E8DFD0;
+  --c-text:         #1C1917;
+  --c-text-muted:   #78716C;
+  --c-accent:       #B45309;
+  --c-accent-hover: #92400E;
+  --c-tag-bg:       #FEF3C7;
+  --c-tag-text:     #92400E;
+
+  --c-ui-bg:     #FFFDF8;
+  --c-ui-border: #E8DFD0;
+  --c-ui-shadow: 0 1px 3px rgba(120,60,0,0.08), 0 1px 2px rgba(120,60,0,0.05);
+}
+
+/* ── Slate palette — GitHub-dark, steel blue accent ──────── */
+html[data-theme="slate"] {
+  --c-bg:           #0D1117;
+  --c-surface:      #161B22;
+  --c-border:       #21262D;
+  --c-text:         #E6EDF3;
+  --c-text-muted:   #7D8590;
+  --c-accent:       #58A6FF;
+  --c-accent-hover: #79B8FF;
+  --c-tag-bg:       #1C2940;
+  --c-tag-text:     #79B8FF;
+
+  --c-ui-bg:     #161B22;
+  --c-ui-border: #21262D;
+  --c-ui-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* ── Midnight palette — deep navy, violet accent ─────────── */
+html[data-theme="midnight"] {
+  --c-bg:           #080814;
+  --c-surface:      #10102A;
+  --c-border:       #1C1C42;
+  --c-text:         #E8E6F0;
+  --c-text-muted:   #9B99B0;
+  --c-accent:       #A78BFA;
+  --c-accent-hover: #C4B5FD;
+  --c-tag-bg:       #1A1040;
+  --c-tag-text:     #C4B5FD;
+
+  --c-ui-bg:     #10102A;
+  --c-ui-border: #1C1C42;
+  --c-ui-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+/* ── Global design tokens (non-colour) ────────────────────── */
+:root {
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  2rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Signature element: accent bar on exp/edu/project items */
+  --exp-bar-width: 2px;
+  --exp-bar-color: var(--c-accent);
+
+  /* Layout */
+  --cv-max-width: 860px;
+  --radius: 6px;
+
+  /* Transitions */
+  --transition: 200ms ease;
+}
+
+/* ── Body ─────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--c-text);
+  background: var(--c-bg);
+  transition: background var(--transition), color var(--transition);
+  min-height: 100vh;
+}
+
+/* ── Toolbar (fixed top-right) ────────────────────────────── */
+.toolbar {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 100;
+}
+
+/* Palette picker: row of colour swatches */
+.palette-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--c-ui-bg);
+  border: 1px solid var(--c-ui-border);
+  border-radius: var(--radius);
+  box-shadow: var(--c-ui-shadow);
+}
+
+.palette-dot {
+  width: 1.0625rem;
+  height: 1.0625rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 100ms ease, outline-color 150ms ease;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+/* Each dot shows both bg colour and accent ring */
+.palette-dot[data-palette="light"]    { background: #F7F6F2; border-color: #2563EB; }
+.palette-dot[data-palette="dark"]     { background: #1A1A1A; border-color: #4F8EF7; }
+.palette-dot[data-palette="warm"]     { background: #FAF7F0; border-color: #B45309; }
+.palette-dot[data-palette="slate"]    { background: #161B22; border-color: #58A6FF; }
+.palette-dot[data-palette="midnight"] { background: #10102A; border-color: #A78BFA; }
+
+.palette-dot:hover {
+  transform: scale(1.2);
+}
+
+/* Active dot: glow outline in accent colour of the active theme */
+.palette-dot.active {
+  outline-color: var(--c-accent);
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--c-ui-border);
+  border-radius: var(--radius);
+  background: var(--c-ui-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--c-ui-shadow);
+  transition: background var(--transition), color var(--transition),
+              border-color var(--transition), transform 80ms ease;
+  white-space: nowrap;
+}
+
+.toolbar-btn:hover {
+  background: var(--c-accent);
+  color: #fff;
+  border-color: var(--c-accent);
+}
+
+.toolbar-btn:active {
+  transform: scale(0.97);
+}
+
+.toolbar-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#theme-toggle {
+  width: 2.375rem;
+  padding: var(--space-2);
+  justify-content: center;
+}
+
+/* ── Page layout ──────────────────────────────────────────── */
+.cv-page {
+  max-width: var(--cv-max-width);
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-10);
+}
+
+/* ── CV Header ────────────────────────────────────────────── */
+.cv-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--c-border);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* Left side: optional photo + name/title block */
+.cv-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Profile photo */
+.cv-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--c-border);
+  flex-shrink: 0;
+  transition: border-color var(--transition);
+}
+
+.cv-header-name h1 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--c-text);
+}
+
+.cv-title {
+  margin-top: var(--space-1);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--c-accent);
+  letter-spacing: -0.01em;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: flex-end;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.contact-item:hover {
+  color: var(--c-accent);
+}
+
+.contact-item i {
+  width: 1em;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--c-accent);
+  font-size: 0.85em;
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+.cv-section {
+  margin-bottom: var(--space-8);
+}
+
+.section-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--c-border);
+}
+
+/* ── About ────────────────────────────────────────────────── */
+.about-text {
+  font-size: var(--text-base);
+  color: var(--c-text);
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+/* ── Experience ───────────────────────────────────────────── */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.exp-item {
+  position: relative;
+  padding-left: var(--space-4);
+  /* Signature: blue vertical bar */
+  border-left: var(--exp-bar-width) solid transparent;
+  transition: border-color var(--transition);
+}
+
+.exp-item:hover {
+  border-left-color: var(--exp-bar-color);
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2);
+}
+
+.exp-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.exp-role {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.exp-company {
+  font-size: var(--text-sm);
+  color: var(--c-accent);
+  font-weight: 500;
+}
+
+.exp-meta {
+  font-size: var(--text-xs);
+  color: var(--c-text-muted);
+  white-space: nowrap;
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.exp-bullets li {
+  font-size: var(--text-sm);
+  color: var(--c-text);
+  line-height: 1.6;
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.exp-bullets li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--c-text-muted);
+  font-weight: 300;
+}
+
+/* ── Education ────────────────────────────────────────────── */
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.edu-item {
+  padding-left: var(--space-4);
+  border-left: var(--exp-bar-width) solid transparent;
+  transition: border-color var(--transition);
+}
+
+.edu-item:hover {
+  border-left-color: var(--exp-bar-color);
+}
+
+.edu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.edu-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edu-degree {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.edu-institution {
+  font-size: var(--text-sm);
+  color: var(--c-accent);
+  font-weight: 500;
+}
+
+.edu-note {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+  font-style: italic;
+}
+
+/* ── Skills ───────────────────────────────────────────────── */
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.skill-category {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.skill-category-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--c-text-muted);
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  background: var(--c-tag-bg);
+  color: var(--c-tag-text);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border-radius: 4px;
+  letter-spacing: 0.01em;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ── Projects ─────────────────────────────────────────────── */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.project-item {
+  padding-left: var(--space-4);
+  border-left: var(--exp-bar-width) solid transparent;
+  transition: border-color var(--transition);
+}
+
+.project-item:hover {
+  border-left-color: var(--exp-bar-color);
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-1);
+}
+
+.project-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-text);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a.project-name:hover {
+  color: var(--c-accent);
+}
+
+.project-link-icon {
+  font-size: 0.65em;
+  margin-left: 4px;
+  opacity: 0.6;
+}
+
+.project-desc {
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+  line-height: 1.6;
+}
+
+/* ── Custom section ───────────────────────────────────────── */
+.custom-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.custom-item {
+  display: flex;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.custom-label {
+  font-weight: 600;
+  color: var(--c-text-muted);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.custom-value {
+  color: var(--c-text);
+}
+
+/* ── Loading & error states ───────────────────────────────── */
+.cv-loading,
+.cv-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--space-4);
+  text-align: center;
+  color: var(--c-text-muted);
+}
+
+.cv-loading i {
+  font-size: 2rem;
+  color: var(--c-accent);
+}
+
+.cv-error i {
+  font-size: 2rem;
+  color: #EF4444;
+}
+
+.cv-error h2 {
+  font-size: var(--text-lg);
+  color: var(--c-text);
+}
+
+.cv-error pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  max-width: 500px;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cv-page {
+    padding: var(--space-8) var(--space-4) var(--space-8);
+  }
+
+  .cv-header {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .cv-photo {
+    width: 64px;
+    height: 64px;
+  }
+
+  .contact-list {
+    align-items: flex-start;
+  }
+
+  .toolbar {
+    top: auto;
+    bottom: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .exp-header,
+  .edu-header {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .skill-category {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .skill-category-name {
+    min-width: unset;
+  }
+}
+
+/* ── Print / PDF ──────────────────────────────────────────── */
+@media print {
+  .toolbar,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #111;
+    font-size: 11pt;
+  }
+
+  .cv-page {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .cv-header {
+    border-bottom-color: #ccc;
+  }
+
+  .section-title {
+    border-bottom-color: #ccc;
+  }
+
+  .exp-item,
+  .edu-item,
+  .project-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .skill-tag {
+    background: #EEF2FF;
+    color: #3B4FC8;
+  }
+}

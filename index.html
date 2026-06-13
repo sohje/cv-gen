@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta (placeholders — updated by main.js after data loads) -->
+  <title>CV</title>
+  <meta name="description" content="CV" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="CV" />
+  <meta property="og:description" content="CV" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 Free CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css"
+    integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!--
+    FOUC prevention: apply saved palette before first paint.
+    Must be synchronous (no defer/async) and cannot use ES module imports.
+    Mirrors the palette logic in theme.js — keep in sync if VALID_IDS changes.
+  -->
+  <script>
+    (function () {
+      var valid = ['light', 'dark', 'warm', 'slate', 'midnight'];
+      var stored = localStorage.getItem('cv-palette');
+
+      var palette = (stored && valid.indexOf(stored) !== -1)
+        ? stored
+        : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+      document.documentElement.setAttribute('data-theme', palette);
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- Toolbar: palette picker + PDF download -->
+  <div class="toolbar no-print">
+
+    <div class="palette-picker" role="group" aria-label="Choose color theme">
+      <button class="palette-dot" data-palette="light" title="Light" aria-label="Light theme"
+        aria-pressed="false"></button>
+      <button class="palette-dot" data-palette="dark" title="Dark" aria-label="Dark theme"
+        aria-pressed="false"></button>
+      <button class="palette-dot" data-palette="warm" title="Warm" aria-label="Warm theme"
+        aria-pressed="false"></button>
+      <button class="palette-dot" data-palette="slate" title="Slate" aria-label="Slate theme"
+        aria-pressed="false"></button>
+      <button class="palette-dot" data-palette="midnight" title="Midnight" aria-label="Midnight theme"
+        aria-pressed="false"></button>
+    </div>
+
+    <button id="pdf-btn" class="toolbar-btn" aria-label="Download PDF" title="Download PDF">
+      <i class="fa-solid fa-file-arrow-down"></i> Download PDF
+    </button>
+  </div>
+
+  <!-- CV content injected here by renderer.js -->
+  <main class="cv-page">
+    <div id="cv-root">
+      <!-- Loading state -->
+      <div class="cv-loading">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <p>Loading CV…</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Vendored libs (regular scripts — must run before the module) -->
+  <script src="libs/js-yaml.min.js"></script>
+  <script src="libs/html2pdf.bundle.min.js"></script>
+
+  <!-- App entry point (ES module — auto-deferred, runs after libs above) -->
+  <script type="module" src="assets/js/main.js"></script>
+
+</body>
+
+</html>
