@@ -212,16 +212,6 @@ Place the image file next to `index.html`. It renders as a circular portrait in 
 
 ---
 
-## Deploy to GitHub Pages
-
-1. Push this repo to GitHub
-2. Go to **Settings → Pages → Source**: set to `main` branch, root `/`
-3. Your CV is live at `https://<username>.github.io/<repo>/`
-
-To update: edit `cv.yaml`, commit, push. Done.
-
----
-
 ## Updating vendored libs
 
 ```bash
