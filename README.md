@@ -5,6 +5,8 @@
 
 No build step. No npm install. No framework. Just static files that work.
 
+**Demo**: https://sohje.github.io/cv-gen/
+
 ---
 
 ## Features
